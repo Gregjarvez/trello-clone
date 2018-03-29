@@ -44,7 +44,7 @@ class Home extends Component {
           />
         )}
         {this.state.boards.map(({ title, id }) => (
-          <Link to={{ pathName: `/b/${id}`, state: { title, id } }}>
+          <Link to={{ pathname: `/b/${id}`, state: { title, id } }}>
             <div className="board--area_item">
               <h2> {title} </h2>
             </div>
