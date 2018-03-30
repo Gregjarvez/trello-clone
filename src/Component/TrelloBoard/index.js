@@ -45,7 +45,6 @@ export default class TrelloBoard extends Component {
                 <form className="list--item-form">
                   <label htmlFor="board-item-list-input">{child.title}</label>
                   <hr />
-                  {console.log(child)}
                   <input type="text" id="board-item-list-input" required />
                 </form>
               </li>
