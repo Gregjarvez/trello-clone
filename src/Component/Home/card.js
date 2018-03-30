@@ -1,5 +1,5 @@
 import React from 'react';
-import Close from './closeIcon.e5ef77f2.svg';
+import Close from '../../closeIcon.e5ef77f2.svg'
 
 const Board = ({
    toggleBoard,

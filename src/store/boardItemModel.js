@@ -8,4 +8,5 @@ export default class BoardItemModel {
       this.id = id;
       this.title = title;
    }
+
 }

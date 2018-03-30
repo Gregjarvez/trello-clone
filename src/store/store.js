@@ -1,5 +1,6 @@
 import { action, autorun, computed, observable, toJS } from 'mobx';
 import BoardItemModel from './boardItemModel';
+import ChildCategoryModel from './childModel';
 
 class BoardStore {
    @observable boards = [];
@@ -10,6 +11,7 @@ class BoardStore {
    constructor() {
       autorun(() => {
          this.isNullEntry = !this.currentBoardTitle.length;
+         console.log(toJS(this.boards))
       });
    }
 
@@ -38,6 +40,14 @@ class BoardStore {
    get getBoards() {
       return toJS(this.boards);
    }
+
+   @action appendDeepChild = (id, payload ) => {
+      const childIndex = this.boards.findIndex(board => board.id === id);
+      if (!(~childIndex)) return
+
+      this.boards[childIndex].children.push(new ChildCategoryModel(payload));
+   }
+
 }
 
 export default new BoardStore();

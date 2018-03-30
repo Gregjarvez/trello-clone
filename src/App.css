@@ -13,6 +13,7 @@ html {
 
 body {
   overflow-x: hidden;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 .App {
   height: 100vh;
@@ -33,11 +34,4 @@ a:visited {
   text-decoration: none;
 }
 
-.board--area {
-  width: auto;
-  height: auto;
-  display: flex;
-  align-items: baseline;
-  flex-flow: wrap;
-  margin: 10rem;
-}
+
