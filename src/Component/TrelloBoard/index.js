@@ -6,38 +6,50 @@ import './index.css';
 @inject('store')
 @observer
 export default class TrelloBoard extends Component {
-  componentWillMount() {
-    const { store: { getBoards }, match: { params } } = this.props;
-    this.activeBoard = getBoards.find(({ id }) => id === +params.id);
-  }
+  state = {
+    addListText: '',
+  };
 
   onCategoryCreate = e => {
     e.preventDefault();
-    const child = {
-      title: this.addListInput.value,
+
+    if (!this.state.addListText.length) {
+      return false;
+    }
+
+    const { store, match } = this.props;
+
+    store.appendDeepChild(+match.params.id, {
+      title: this.state.addListText,
       id: uuid.generate(),
       tasks: [],
-    };
-    const { store: { appendDeepChild }, match: { params } } = this.props;
-    appendDeepChild(+params.id, child);
-    this.addListInput.value = ''
+    });
+  };
+
+  onAddListInputChange = ({ currentTarget }) => {
+    this.setState({
+      addListText: currentTarget.value,
+    });
   };
 
   render() {
-    return this.activeBoard ? (
+    const { store: { activeBoard } } = this.props;
+
+    return activeBoard ? (
       <section>
-        <h2 className="s-board--title"> {this.activeBoard.title} </h2>
+        <h2 className="s-board--title"> {activeBoard.title} </h2>
         <div className="s-board--area">
           <ul className="list">
-            <li>
-              <form className="list--item-form">
-                <label htmlFor="board-item-list-input">
-                  Child instance title
-                </label>
-                <hr />
-                <input type="text" id="board-item-list-input" required />
-              </form>
-            </li>
+            {activeBoard.children.map(child => (
+              <li key={child.id}>
+                <form className="list--item-form">
+                  <label htmlFor="board-item-list-input">{child.title}</label>
+                  <hr />
+                  {console.log(child)}
+                  <input type="text" id="board-item-list-input" required />
+                </form>
+              </li>
+            ))}
             <li>
               <form
                 className="list--item-form extended"
@@ -46,9 +58,12 @@ export default class TrelloBoard extends Component {
                 <input
                   type="text"
                   placeholder="add a list"
-                  ref={input => (this.addListInput = input)}
+                  value={this.state.addListText}
+                  onChange={this.onAddListInputChange}
                 />
-                <p role="label">give me a name</p>
+                {!this.state.addListText.length && (
+                  <p role="label">give me a name</p>
+                )}
               </form>
             </li>
           </ul>

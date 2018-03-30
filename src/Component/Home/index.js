@@ -13,6 +13,7 @@ const Home = ({
       onBoardInputChange,
       onBoardCreate,
       isNullEntry,
+      setActiveBoards
    },
 }) => (
    <div className="board--area">
@@ -30,7 +31,7 @@ const Home = ({
          />
       )}
       {getBoards.map(({ title, id }) => (
-         <Link to={`/b/${id}`} key={id}>
+         <Link to={`/b/${id}`} key={id} onClick={() => setActiveBoards(id)}>
             <div className="board--area_item">
                <h2> {title} </h2>
             </div>
