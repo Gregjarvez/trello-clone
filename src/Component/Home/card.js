@@ -2,11 +2,11 @@ import React from 'react';
 import Close from './closeIcon.e5ef77f2.svg';
 
 const Board = ({
-  toggleBoard,
-  currentBoardTitle,
-  onBoardInputChange,
-  onBoardCreate,
-  isNullEntry,
+   toggleBoard,
+   currentBoardTitle,
+   onBoardInputChange,
+   onBoardCreate,
+   isNullEntry,
 }) => (
   <div className="card">
     <section className="card--header">

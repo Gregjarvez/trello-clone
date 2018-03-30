@@ -32,3 +32,12 @@ a:active,
 a:visited {
   text-decoration: none;
 }
+
+.board--area {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: baseline;
+  flex-flow: wrap;
+  margin: 10rem;
+}

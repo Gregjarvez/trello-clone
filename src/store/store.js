@@ -1,4 +1,5 @@
-import { action, autorun, computed, observable } from 'mobx';
+import { action, autorun, computed, observable, toJS } from 'mobx';
+import BoardItemModel from './boardItemModel';
 
 class BoardStore {
    @observable boards = [];
@@ -8,7 +9,7 @@ class BoardStore {
 
    constructor() {
       autorun(() => {
-         this.isNullEntry = !this.currentBoardTitle.length
+         this.isNullEntry = !this.currentBoardTitle.length;
       });
    }
 
@@ -24,10 +25,7 @@ class BoardStore {
          return;
       }
 
-      this.boards.push({
-         title: this.currentBoardTitle,
-         id: Date.now(),
-      });
+      this.boards.push(new BoardItemModel(this.currentBoardTitle, Date.now()));
       this.toggle();
    };
 
@@ -38,7 +36,7 @@ class BoardStore {
 
    @computed
    get getBoards() {
-      return this.boards.toJS();
+      return toJS(this.boards);
    }
 }
 
