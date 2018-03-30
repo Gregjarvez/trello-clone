@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
 
-export default class TrelloBoard extends Component {
-
+ class TrelloBoard extends Component {
+   componentDidMount() {
+      console.log('hello')
+   }
+   render() {
+      return (
+        <div className="trello--instance">
+           {console.log(this.props)}
+        </div>
+      )
+   }
 }
+
+export default TrelloBoard;

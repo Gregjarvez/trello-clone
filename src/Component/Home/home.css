@@ -151,3 +151,7 @@ img:hover {
   transform: scale(1.5);
 }
 
+.ops {
+  font-size: 1rem;
+  color: black;
+}

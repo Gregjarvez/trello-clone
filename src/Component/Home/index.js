@@ -1,58 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 import './home.css';
 import Board from './card';
 
-class Home extends Component {
-  state = {
-    showBoard: false,
-    currentBoardTitle: '',
-    boards: [],
-  };
-  id = 100;
-
-  toggleBoard = () => {
-    this.setState(prevState => ({ showBoard: !prevState.showBoard }));
-  };
-
-  onBoardInputChange = ({ target: { value } }) => {
-    this.setState({ currentBoardTitle: value });
-  };
-
-  onBoardCreate = () => {
-    this.setState(
-      prevState => ({
-        boards: [...prevState.boards, { title: this.state.currentBoardTitle, id: ++this.id }],
-      }),
-      this.toggleBoard,
-    );
-  };
-
-  render() {
-    return (
-      <div className="board--area">
-        {!this.state.showBoard ? (
-          <button className="create--board" onClick={this.toggleBoard}>
-            Create a new board....
-          </button>
-        ) : (
-          <Board
-            inputValue={this.state.currentBoardTitle}
-            toggleBoard={this.toggleBoard}
-            onBoardInputChange={this.onBoardInputChange}
-            onBoardCreate={this.onBoardCreate}
-          />
-        )}
-        {this.state.boards.map(({ title, id }) => (
-          <Link to={{ pathname: `/b/${id}`, state: { title, id } }}>
-            <div className="board--area_item">
-              <h2> {title} </h2>
-            </div>
-          </Link>
-        ))}
-      </div>
-    );
+const Home = ({
+  store: {
+    getBoards,
+    showBoard,
+    currentBoardTitle,
+    toggle,
+    onBoardInputChange,
+    onBoardCreate,
+    isNullEntry
   }
-}
+}) => (
+  <div className="board--area">
+    {!showBoard ? (
+      <button className="create--board" onClick={toggle}>
+        Create a new board....
+      </button>
+    ) : (
+      <Board
+        inputValue={currentBoardTitle}
+        toggleBoard={toggle}
+        onBoardInputChange={onBoardInputChange}
+        onBoardCreate={onBoardCreate}
+        isNullEntry={isNullEntry}
+      />
+    )}
+    {getBoards.map(({ title, id }) => (
+      <Link to={`/b/${id}`} key={id}>
+        <div className="board--area_item">
+          <h2> {title} </h2>
+        </div>
+      </Link>
+    ))}
+  </div>
+);
 
-export default Home;
+export default inject('store')(observer(Home));
